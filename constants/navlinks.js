@@ -1,11 +1,8 @@
-const Navlinks = {
-  navlinks: [
-    { name: "Men", link: "/" },
-    { name: "Women", link: "/" },
-    { name: "Kids", link: "/" },
-    { name: "Shop", link: "/" },
-    { name: "Contact Us", link: "/" },
+const NavLinks = {
+  navLinks: [
+    { name: "Home", link: "" },
+    { name: "Products", link: "products" },
   ],
 };
 
-export default Navlinks;
+export default NavLinks;
