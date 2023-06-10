@@ -2,10 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
-import Logo from "../public/assets/logo.png";
-import NavLinks from "../constants/navLinks.js";
-import SearchIcon from "../public/assets/search.svg";
-import ProfileIcon from "../public/assets/profile-image.png";
+import Logo from "../../public/assets/logo.png";
+import NavLinks from "../../constants/navLinks.js";
+import SearchIcon from "../../public/assets/search.svg";
+import ProfileIcon from "../../public/assets/profile-image.png";
 
 const Navbar = () => {
   const [searchText, setSearchText] = useState("");
@@ -32,7 +32,7 @@ const Navbar = () => {
             <div className=" flex gap-3 px-4 lg:gap-5 xl:gap-7 2xl:gap-9 lg:px-7 xl:px-12 2xl:px-28 text-base lg:text-lg xl:text-xl py-2 ">
               {NavLinks.navLinks.map((items, i) => {
                 return (
-                  <div key={isNaN}>
+                  <div key={i}>
                     <Link href={`/${items.link}`}>
                       <a>{items.name}</a>
                     </Link>
