@@ -1,4 +1,5 @@
 import Head from "next/head";
+import LoginModal from "../components/modals/loginModal";
 
 export default function Home() {
   return (
@@ -9,7 +10,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>Home</main>
+      <main className="p-10 text-lg font-semibold text-center">This is the Public Landing Page | HOME PAGE</main>
 
       <footer>
         <a
