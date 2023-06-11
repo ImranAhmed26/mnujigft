@@ -8,7 +8,7 @@ import Logo from "../../public/assets/logo.png";
 import Loader from "../common/loader";
 import { POST } from "../../lib/api";
 
-export default function LoginModal({ visible, setVisible }) {
+const LoginModal = ({ visible, setVisible }) => {
   //authContext  State
   const { state, dispatch } = useContext(authContext);
 
@@ -275,4 +275,6 @@ export default function LoginModal({ visible, setVisible }) {
       </Transition>
     </>
   );
-}
+};
+
+export default LoginModal;

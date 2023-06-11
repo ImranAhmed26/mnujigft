@@ -51,15 +51,18 @@ const Navbar = () => {
           </div>
           <div>
             <div className=" flex gap-3 px-4 lg:gap-5 xl:gap-7 2xl:gap-9 lg:px-7 xl:px-12 2xl:px-28 text-base lg:text-lg xl:text-xl py-2 ">
-              {NavLinks.navLinks.map((items, i) => {
-                return (
-                  <div key={i}>
-                    <Link href={`/${items.link}`}>
-                      <a>{items.name}</a>
-                    </Link>
-                  </div>
-                );
-              })}
+              <div>
+                <Link href={`/`}>
+                  <a>Home</a>
+                </Link>
+              </div>
+              {state.user && (
+                <div>
+                  <Link href={`/products`}>
+                    <a>Products</a>
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         </div>

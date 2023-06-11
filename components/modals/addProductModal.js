@@ -1,33 +1,45 @@
 import React, { useState } from "react";
 import { BiCaretDown } from "react-icons/bi";
-const categoryItems = [
-  { name: "bath", id: 1 },
-  { name: "bedding", id: 2 },
-  { name: "kitchen", id: 3 },
-];
+import { POST } from "../../lib/api";
+import { toastDefaultMessage } from "../../lib/helper";
 
-const AddProductModal = ({ buttonName, handleClick }) => {
-  const [name, setName] = useState();
-  const [category, setCategory] = useState({});
-  const [unitPrice, setUnitPrice] = useState();
+import { categoryItems, ProductCategoryId } from "../../constants/constants";
+
+const AddProductModal = ({ buttonName, setRefresh }) => {
+  const [name, setName] = useState("");
+  const [categoryId, setCategoryId] = useState();
+  const [unitPrice, setUnitPrice] = useState(0);
   const [status, setStatus] = useState();
 
-  let body = { name, category: category.id, unitPrice, status };
+  let body = { name, categoryId: categoryId, unitPrice };
 
   const reset = () => {
-    setCategory({});
+    setCategoryId(0);
     setName("");
-    setUnitPrice("");
+    setUnitPrice(0);
   };
 
   const handleAddProduct = () => {
-    console.log(body);
-    console.log(category.length);
-    reset();
+    if (name && unitPrice > 0 && categoryId > 0) {
+      POST("/products/createProduct", body).then(({ data, status }) => {
+        if (status !== 200) {
+          console.log(data);
+          console.log(status);
+        } else if (status === 200) {
+          console.log("Product Added successful");
+          console.log(data);
+          toastDefaultMessage("🦄 Item added");
+        }
+      });
+      reset();
+      setRefresh(true);
+    } else {
+      toastDefaultMessage("🏰 Missing Fields. Product Save Failed.");
+    }
   };
 
   const handleSelectCategory = (e) => {
-    setCategory(e);
+    setCategoryId(e);
     const elem = document.activeElement;
     if (elem) {
       elem?.blur();
@@ -55,10 +67,22 @@ const AddProductModal = ({ buttonName, handleClick }) => {
               }}
             />
           </div>
+
+          <div className="mt-2">
+            <input
+              className="outline-none text-sm text-gray-800 border px-4 py-2 w-full rounded-md "
+              placeholder="Unit Price"
+              type="number"
+              value={unitPrice}
+              onChange={(e) => {
+                setUnitPrice(e.target.value);
+              }}
+            />
+          </div>
           <div className="mt-2  w-full">
             <div className="dropdown w-full">
               <div tabIndex={0} className="flex justify-between btn m-1 w-full">
-                <div>{Object.keys(category).length > 0 ? category.name : "Category"}</div>
+                <div>{categoryId > 0 ? ProductCategoryId[categoryId] : "Category"}</div>
                 <div>
                   <BiCaretDown />
                 </div>
@@ -74,7 +98,7 @@ const AddProductModal = ({ buttonName, handleClick }) => {
                       className=""
                       value={item.id}
                       onClick={() => {
-                        handleSelectCategory(item);
+                        handleSelectCategory(item.id);
                       }}
                     >
                       <a>{item.name}</a>
@@ -85,22 +109,10 @@ const AddProductModal = ({ buttonName, handleClick }) => {
             </div>
           </div>
 
-          <div className="mt-2">
-            <input
-              className="outline-none text-sm text-gray-800 border px-4 py-2 w-full rounded-md "
-              placeholder="Unit Price"
-              type="number"
-              value={unitPrice}
-              onChange={(e) => {
-                setUnitPrice(e.target.value);
-              }}
-            />
-          </div>
-
-          <div className="modal-action">
+          <div className="modal-action mt-16">
             <button className="btn">Cancel</button>
             <button className="btn bg-lime-400 hover:bg-lime-500" onClick={handleAddProduct}>
-              Add Products
+              Save Product
             </button>
           </div>
         </form>

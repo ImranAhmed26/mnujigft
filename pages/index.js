@@ -1,7 +1,11 @@
 import Head from "next/head";
+import { useContext } from "react";
 import LoginModal from "../components/modals/loginModal";
+import { authContext } from "../context/authContext";
 
 export default function Home() {
+  const { state, dispatch } = useContext(authContext);
+
   return (
     <div className="">
       <Head>
@@ -10,7 +14,11 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="p-10 text-lg font-semibold text-center">This is the Public Landing Page | HOME PAGE</main>
+      <main className="bg-white p-10 text-xl text-gray-600 font-semibold text-center ">
+        <div>Welcome to the Public Landing Page | HOME PAGE</div>
+
+        {!state.user && <div>Please log in to view Product List</div>}
+      </main>
 
       <footer>
         <a
